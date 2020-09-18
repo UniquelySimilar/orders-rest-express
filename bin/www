@@ -5,6 +5,13 @@
  */
 
 var app = require('../app');
+
+var dotenv = require('dotenv');
+var envCfg = dotenv.config();
+if (envCfg.error) {
+  throw envCfg.error;
+}
+
 var debug = require('debug')('orders-rest-express:server');
 var http = require('http');
 
