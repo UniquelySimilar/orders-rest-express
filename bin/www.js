@@ -4,16 +4,16 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+import app from '../app.js';
 
-var dotenv = require('dotenv');
+import dotenv from 'dotenv';
 var envCfg = dotenv.config();
 if (envCfg.error) {
   throw envCfg.error;
 }
 
-var debug = require('debug')('orders-rest-express:server');
-var http = require('http');
+//var debug = require('debug')('orders-rest-express:server');
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
@@ -93,5 +93,6 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  //debug('Listening on ' + bind);
+  console.log('Listening on port ' + bind);
 }

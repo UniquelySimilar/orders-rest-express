@@ -2,9 +2,11 @@
   "name": "orders-rest-express",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "DEBUG=orders-rest-express:* node ./bin/www",
-    "serve": "nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "serve": "nodemon ./bin/www",
+    "debug": "DEBUG=orders-rest-express:* npm run serve"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -12,7 +14,13 @@
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
-    "mysql": "^2.18.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
     "nodemon": "^2.0.4"
   }
 }

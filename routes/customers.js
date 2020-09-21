@@ -1,4 +1,4 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 
 /* GET customers listing. */
@@ -6,4 +6,4 @@ router.get('/', function(req, res, next) {
   res.send('customer index');
 });
 
-module.exports = router;
+export default router;
