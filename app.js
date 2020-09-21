@@ -1,7 +1,7 @@
 import express from'express';
 import logger from 'morgan';
 
-import customersRouter from './routes/customers.js';
+import customersRouter from './routes/customer-routes.js';
 
 var app = express();
 
