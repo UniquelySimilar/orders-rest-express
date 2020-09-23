@@ -1,10 +1,11 @@
 import express from 'express';
 var router = express.Router();
 import CustomerController from '../controllers/customer-controller.js'
+import OrderController from '../controllers/order-controller.js'
 
 var customerController = new CustomerController();
+var orderController = new OrderController();
 
-/* GET customers listing. */
 router.get('/', (req, res) => {
   customerController.findAll( results => {
     res.send(results);
@@ -13,9 +14,14 @@ router.get('/', (req, res) => {
 
 router.get('/:customerId', (req, res) => {
   let id = req.params.customerId;
+  let customer = {};
   customerController.find(id, results => {
-    res.send(results);
-  })
+    customer = results;
+    orderController.findByCustomer(id, (results) => {
+      customer.orders = results;
+      res.send(customer);
+    });
+  });
 });
 
 router.post('/', (req, res) => {
