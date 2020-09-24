@@ -1,6 +1,8 @@
 import mysql from 'mysql';
 import pool from '../mysql-conn-pool.js';
 
+// TODO: Research effect of throwing error.  Possibly handle errors differently.
+
 class CustomerController {
   findAll(callback) {
     pool.query('SELECT * FROM customers', (error, results, fields) => {
@@ -27,9 +29,15 @@ class CustomerController {
 
   create(customer, callback) {
     pool.query('INSERT INTO customers SET ?', customer, (error, results, fields) => {
-      if (error) throw error;
+      if (error) {
+        if (error.sqlMessage) {
+          console.error(`ERROR: ${error.sqlMessage}`);
+        }
+        else {
+          console.error(error);
+        }
+      }
 
-      // Return OkPacket object
       return callback(results);
     });
   }

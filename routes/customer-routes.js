@@ -26,7 +26,12 @@ router.get('/:customerId', (req, res) => {
 
 router.post('/', (req, res) => {
   customerController.create(req.body, (results) => {
-    res.sendStatus(201);
+    if (!results) {
+      res.sendStatus(400);
+    }
+    else {
+      res.sendStatus(201);
+    }
   });
 });
 
