@@ -1,5 +1,8 @@
 import express from 'express';
 var router = express.Router();
+import expressValidator from 'express-validator';
+const { body, validationResult } = expressValidator;
+
 import CustomerController from '../controllers/customer-controller.js'
 import OrderController from '../controllers/order-controller.js'
 
@@ -24,10 +27,18 @@ router.get('/:customerId', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/', [
+  body('first_name').isLength({min:1, max: 50})
+],
+(req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   customerController.create(req.body, (results) => {
     if (!results) {
-      res.sendStatus(400);
+      res.status(400).send('Bad request - see server log');
     }
     else {
       res.sendStatus(201);
