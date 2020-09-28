@@ -27,8 +27,16 @@ router.get('/:customerId', (req, res) => {
   });
 });
 
-router.post('/', [
-  body('first_name').isLength({min:1, max: 50})
+router.post('/',
+[
+  body('first_name').isLength({ min:1, max: 50} ),
+  body('last_name').isLength({ min:1, max: 50 }),
+  body('street').isLength({ min:1, max: 50 }),
+  body('city').isLength({ min:1, max: 50 }),
+  body('zipcode').isPostalCode('US'),
+  body('home_phone').isInt({ min: 1000000000, max: 9999999999 }),
+  body('work_phone').optional({ checkFalsy: true }).isInt({ min: 1000000000, max: 9999999999 }),
+  body('email').isEmail()
 ],
 (req, res) => {
   const errors = validationResult(req);
