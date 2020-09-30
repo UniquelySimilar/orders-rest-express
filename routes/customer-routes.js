@@ -21,7 +21,6 @@ router.get('/:customerId', (req, res) => {
     customer = results;
     orderController.findByCustomer(id, (results) => {
       customer.orders = results;
-      console.log(customer);
       res.send(customer);
     });
   });
