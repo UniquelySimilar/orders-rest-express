@@ -12,4 +12,12 @@ const customerValRules = [
   body('email').isEmail()
 ];
 
-export { validationResult, customerValRules };
+const orderValRules = [
+  body('customer_id').isInt({ min: 1, max: 2147483647 }),
+  body('order_status').isInt({ min: 1, max: 4} ),
+  body('order_date').isInt({ min: 0, max: 9999999999999 }),
+  body('required_date').isInt({ min: 0, max: 9999999999999 }),
+  body('shipped_date').optional({ checkFalsy: true }).isInt({ min: 0, max: 9999999999999 }),
+]
+
+export { validationResult, customerValRules, orderValRules };
