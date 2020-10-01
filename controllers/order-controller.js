@@ -18,14 +18,6 @@ class OrderController {
   }
 
   create(order, callback) {
-    order.order_date = new Date(parseInt(order.order_date));
-    order.required_date = new Date(parseInt(order.required_date));
-    if (order.shipped_date === '') {
-      order.shipped_date = null;
-    }
-    else {
-      order.shipped_date = new Date(parseInt(order.shipped_date));
-    }
     pool.query('INSERT INTO orders SET ?', order, (error, results, fields) => {
       if (error) {
         if (error.sqlMessage) {
