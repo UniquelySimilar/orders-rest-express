@@ -62,6 +62,14 @@ class OrderController {
       return callback(results);
     })
   }
+
+  delete(id, callback) {
+    pool.query('DELETE FROM orders WHERE id = ?', [id], (error, results, fields) => {
+      if (error) throw error;
+
+      return callback(results);
+    })
+  }
 }
 
 export default OrderController;

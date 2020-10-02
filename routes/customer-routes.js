@@ -70,7 +70,7 @@ router.delete('/:id', (req, res)=> {
     else {
       res.sendStatus(204);
     }
-  })
-})
+  });
+});
 
 export default router;
