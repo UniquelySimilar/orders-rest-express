@@ -18,6 +18,10 @@ class OrderController {
   }
 
   create(order, callback) {
+    if (order.shipped_date === '') {
+      order.shipped_date = null;
+    }
+
     pool.query('INSERT INTO orders SET ?', order, (error, results, fields) => {
       if (error) {
         if (error.sqlMessage) {
