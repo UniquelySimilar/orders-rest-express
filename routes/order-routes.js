@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 router.post('/',
 orderValRules,
 (req, res) => {
-  const errors = validationResult(req);
+  let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
@@ -28,6 +28,27 @@ orderValRules,
       res.sendStatus(201);
     }
   })
-})
+});
+
+router.put('/:id',
+orderValRules,
+(req, res) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  let order = req.body;
+  order.id = req.params.id;
+  orderController.update(order, results => {
+    if (results.affectedRows === 0) {
+      res.sendStatus(404);
+    }
+    else {
+      res.sendStatus(204);
+    }
+  });
+
+});
 
 export default router;

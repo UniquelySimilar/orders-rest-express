@@ -1,3 +1,4 @@
+import mysql from 'mysql';
 import pool from '../mysql-conn-pool.js';
 
 class OrderController {
@@ -34,6 +35,32 @@ class OrderController {
   
       return callback(results);
     });
+  }
+
+  update(order, callback) {
+    if (order.shipped_date === '') {
+      order.shipped_date = null;
+    }
+
+    let updatedAt = mysql.raw('CURRENT_TIMESTAMP()');
+    let sql = 'UPDATE orders SET order_status = ?, order_date = ?, required_date = ?, shipped_date = ?, ' +
+              'updated_at = ? WHERE id = ?';
+    let queryValues = [
+      order.order_status, order.order_date, order.required_date, order.shipped_date, updatedAt, order.id
+    ]
+
+    pool.query(sql, queryValues, (error, results, fields) => {
+      if (error) {
+        if (error.sqlMessage) {
+          console.error(`ERROR: ${error.sqlMessage}`);
+        }
+        else {
+          console.error(error);
+        }
+      }
+
+      return callback(results);
+    })
   }
 }
 
