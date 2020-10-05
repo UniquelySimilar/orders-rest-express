@@ -12,6 +12,18 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/:id', (req, res) => {
+  orderController.find(req.params.id, results => {
+    if (!results) {
+      res.sendStatus(404);
+    }
+    else {
+      res.send(results);
+    }
+  })
+
+});
+
 router.post('/',
 orderValRules,
 (req, res) => {

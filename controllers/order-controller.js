@@ -10,6 +10,22 @@ class OrderController {
     });
   }
 
+  find(id, callback) {
+    pool.query('SELECT * FROM orders WHERE id = ?', [id], (error, results, fields) => {
+      if (error) throw error;
+
+      // Convert result from array of RowDataPacket objects to array of object literals
+      let orders = results.map( result => Object.assign({}, result) );
+      let order = null;
+      if (orders.length > 0) {
+        order = orders[0];
+        console.log(order);
+      }
+
+      return callback(order);
+    })
+  }
+
   findByCustomer(customerId, callback) {
     pool.query('SELECT * FROM orders WHERE customer_id = ?', [customerId], (error, results, fields) => {
       if (error) throw error;
