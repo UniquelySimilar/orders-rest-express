@@ -5,11 +5,15 @@ class UserController {
     pool.query('SELECT * FROM users', (error, results, fields) => {
       if (error) throw error;
 
-      for (let i = 0; i < results.length; i++) {
-        results[i].password = undefined;
-      }
-      
-      return callback(results);
+
+      //let usersNoPwd = results.map(removePwd);
+      let usersNoPwd = results.map( result => {
+        let user = Object.assign({}, result);
+        user.password = undefined;
+        return user;
+      })
+
+      return callback(usersNoPwd);
     })
   }
 
