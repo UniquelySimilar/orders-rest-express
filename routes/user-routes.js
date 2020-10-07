@@ -15,6 +15,13 @@ router.get('/:userName', (req, res) => {
   userController.find(userName, results => {
     res.send(results);
   });
-})
+});
+
+router.post('/', (req, res) => {
+  let user = req.body;
+  userController.create(user, results => {
+    res.send(results);
+  })
+});
 
 export default router;

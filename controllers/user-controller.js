@@ -1,4 +1,7 @@
 import pool from '../mysql-conn-pool.js';
+import bcrypt from 'bcrypt';
+
+const saltRounds = 10;
 
 class UserController {
   findAll(callback) {
@@ -31,6 +34,19 @@ class UserController {
 
       return callback(user);
     })
+  }
+
+  create(user, callback) {
+    bcrypt.hash(user.password, saltRounds, function(err, hash) {
+      if (err) throw err;
+
+      user.password = hash;
+      pool.query('INSERT INTO tokenusersexpress SET ?', user, (error, results, fields) => {
+        if (error) throw error;
+  
+        return callback(results);
+      });
+    });
   }
 }
 

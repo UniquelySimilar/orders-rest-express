@@ -5,6 +5,7 @@ import cors from 'cors';
 import customersRouter from './routes/customer-routes.js';
 import ordersRouter from './routes/order-routes.js';
 import usersRouter from './routes/user-routes.js';
+import loginRouter from './routes/login-routes.js';
 
 var app = express();
 
@@ -16,5 +17,6 @@ app.use(cors());
 app.use('/customers', customersRouter);
 app.use('/orders', ordersRouter);
 app.use('/users', usersRouter);
+app.use('/login', loginRouter);
 
 export default app;
