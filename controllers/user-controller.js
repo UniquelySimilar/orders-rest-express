@@ -8,8 +8,6 @@ class UserController {
     pool.query('SELECT * FROM users', (error, results, fields) => {
       if (error) throw error;
 
-
-      //let usersNoPwd = results.map(removePwd);
       let usersNoPwd = results.map( result => {
         let user = Object.assign({}, result);
         user.password = undefined;

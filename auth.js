@@ -1,3 +1,5 @@
+import pool from './mysql-conn-pool.js';
+
 var checkAuthHeader = function(req, res, next) {
   let headerValue = req.header('Authorization');
   if (headerValue === undefined) {
@@ -5,14 +7,18 @@ var checkAuthHeader = function(req, res, next) {
   }
   else {
     let token = headerValue.substring(7);
-    //  TODO: Query tokenusersexpress table for token.
-    //  - If NOT found, respond with 401
-    //  - If found, check expiration date
-    //    * If NOT expired, call next()
-    //    * If expired, respond with 401
-  }
+    let sql = 'SELECT * FROM ordersdb.tokenusersexpress WHERE DATE(tokenexp) > CURDATE() AND token = ?';
+    pool.query(sql, [token], (error, results, fields) => {
+      if (error) throw error;
 
-  next();
+      if (results.length === 0) {
+        res.sendStatus(401);
+      }
+      else {
+        next();
+      }
+    })
+  }
 }
 
 export { checkAuthHeader };
