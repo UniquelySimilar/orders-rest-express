@@ -1,6 +1,10 @@
 import pool from './mysql-conn-pool.js';
 
 var checkAuthHeader = function(req, res, next) {
+  if (req.path === '/login') {
+    return next();
+  }
+
   let headerValue = req.header('Authorization');
   if (headerValue === undefined) {
     res.sendStatus(401);
