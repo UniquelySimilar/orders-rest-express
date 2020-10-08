@@ -20,8 +20,8 @@ class LoginController {
           if (result) {
             token = uuidv4();
             // Store token and expiration in database
-            pool.query('UPDATE tokenusersexpress SET token = ?, tokenexp = ? WHERE username = ?',
-              [token, new Date(), user.username], (error, results, fields) => {
+            pool.query('UPDATE tokenusersexpress SET token = ?, tokenexp = (CURDATE() + 1) WHERE username = ?',
+              [token, user.username], (error, results, fields) => {
                 if (error) throw error;
               })
           }
