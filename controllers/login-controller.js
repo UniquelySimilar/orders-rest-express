@@ -31,6 +31,21 @@ class LoginController {
       }
     });
   }
+
+  logout(headerValue, callback) {
+    if (headerValue !== undefined) {
+      let token = headerValue.substring(7);
+      let sql = "UPDATE tokenusersexpress SET token = NULL, tokenexp = NULL WHERE token = ?";
+      pool.query(sql, [token], (error, results, fields) => {
+        if (error) throw error;
+
+        return callback();
+      });
+    }
+    else {
+      return callback();
+    }
+  }
 }
 
 export default LoginController;

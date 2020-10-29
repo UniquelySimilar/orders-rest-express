@@ -5,8 +5,6 @@ import LoginController from '../controllers/login-controller.js';
 var loginController = new LoginController();
 
 router.post('/', (req, res) => {
-  console.log(req.body);
-  
   loginController.login(req.body, results => {
     if (!results) {
       res.sendStatus(401);
