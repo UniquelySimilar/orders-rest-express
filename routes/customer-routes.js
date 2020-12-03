@@ -19,10 +19,15 @@ router.get('/:customerId', (req, res) => {
   let customer = {};
   customerController.find(id, results => {
     customer = results;
-    orderController.findByCustomer(id, (results) => {
-      customer.orders = results;
-      res.send(customer);
-    });
+    if (!customer) {
+      res.sendStatus(404);
+    }
+    else {
+      orderController.findByCustomer(id, (results) => {
+        customer.orders = results;
+        res.send(customer);
+      });
+    }
   });
 });
 

@@ -6,6 +6,7 @@ import { checkAuthHeader } from './auth.js';
 
 import customersRouter from './routes/customer-routes.js';
 import ordersRouter from './routes/order-routes.js';
+import lineItemsRouter from './routes/lineitem-routes.js';
 import usersRouter from './routes/user-routes.js';
 // Client app currently used for Express and Rails REST APIs.  Possibly create context root on servers
 // in future and combine login and logout routes here.
@@ -23,6 +24,7 @@ app.use('/', checkAuthHeader);
 
 app.use('/customers', customersRouter);
 app.use('/orders', ordersRouter);
+app.use('/lineitems', lineItemsRouter)
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
