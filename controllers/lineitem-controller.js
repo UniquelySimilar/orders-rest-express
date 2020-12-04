@@ -32,8 +32,13 @@ class LineItemController {
     });
   }
 
-  create(lineItem, callback) {
-    
+  create(lineitem, callback) {
+    let sql = 'INSERT INTO line_items (order_id, product_id, unit_price, quantity) values(?, null, ?, ?)';
+    pool.query(sql, [lineitem.order_id, lineitem.unit_price, lineitem.quantity], (error, results, fields) => {
+      if (error) throw error;
+
+      return callback(results);
+    });
   }
 
 }
