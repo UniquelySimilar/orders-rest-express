@@ -58,11 +58,9 @@ class OrderController {
       order.shipped_date = null;
     }
 
-    let updatedAt = mysql.raw('CURRENT_TIMESTAMP()');
-    let sql = 'UPDATE orders SET order_status = ?, order_date = ?, required_date = ?, shipped_date = ?, ' +
-              'updated_at = ? WHERE id = ?';
+    let sql = 'UPDATE orders SET order_status = ?, order_date = ?, required_date = ?, shipped_date = ? WHERE id = ?';
     let queryValues = [
-      order.order_status, order.order_date, order.required_date, order.shipped_date, updatedAt, order.id
+      order.order_status, order.order_date, order.required_date, order.shipped_date, order.id
     ]
 
     pool.query(sql, queryValues, (error, results, fields) => {

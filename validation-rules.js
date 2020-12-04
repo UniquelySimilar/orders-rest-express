@@ -12,7 +12,7 @@ const customerValRules = [
   body('email').isEmail()
 ];
 
-const orderValRules = [
+const orderCreateValRules = [
   body('customer_id').isInt({ min: 1, max: 2147483647 }),
   body('order_status').isInt({ min: 1, max: 4} ),
   // TODO: matches with regex not working.  Text regex outside of app.
@@ -21,4 +21,17 @@ const orderValRules = [
   //body('shipped_date').optional({ checkFalsy: true }).matches('/^\d{4}-\d{2}-\d{2}$/'),
 ]
 
-export { validationResult, customerValRules, orderValRules };
+const orderEditValRules = [
+  body('order_status').isInt({ min: 1, max: 4} ),
+  // TODO: matches with regex not working.  Text regex outside of app.
+  //body('order_date').matches('/^\d{4}-\d{2}-\d{2}$/'),
+  //body('required_date').matches('/^\d{4}-\d{2}-\d{2}$/'),
+  //body('shipped_date').optional({ checkFalsy: true }).matches('/^\d{4}-\d{2}-\d{2}$/'),
+]
+
+export {
+  validationResult,
+  customerValRules,
+  orderCreateValRules,
+  orderEditValRules
+};

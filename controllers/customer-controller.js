@@ -1,4 +1,3 @@
-import mysql from 'mysql';
 import pool from '../mysql-conn-pool.js';
 
 // TODO: Research effect of throwing error.  Possibly handle errors differently.
@@ -43,12 +42,11 @@ class CustomerController {
   }
 
   update(id, customer, callback) {
-    let updatedAt = mysql.raw('CURRENT_TIMESTAMP()');
     let sql = 'UPDATE customers SET first_name = ?, last_name = ?, city = ?, state = ?, zipcode = ?, ' +
-              'home_phone = ?, work_phone = ?, email = ?, updated_at = ? WHERE id = ?';
+              'home_phone = ?, work_phone = ?, email = ? WHERE id = ?';
     let queryValues = [
       customer.first_name, customer.last_name, customer.city, customer.state, customer.zipcode,
-      customer.home_phone, customer.work_phone, customer.email, updatedAt, id
+      customer.home_phone, customer.work_phone, customer.email, id
     ];
 
     pool.query(sql, queryValues, (error, results, fields) => {

@@ -24,6 +24,18 @@ class LineItemController {
     })
   }
 
+  findByOrder(orderId, callback) {
+    pool.query('SELECT * FROM line_items WHERE order_id = ?', [orderId], (error, results, fields) => {
+      if (error) throw error;
+
+      return callback(results);
+    });
+  }
+
+  create(lineItem, callback) {
+    
+  }
+
 }
 
 export default LineItemController;

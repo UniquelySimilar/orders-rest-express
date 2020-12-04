@@ -2,9 +2,11 @@ import express from 'express';
 var router = express.Router();
 
 import OrderController from '../controllers/order-controller.js';
-import { validationResult, orderValRules } from '../validation-rules.js';
+import LineItemController from '../controllers/lineitem-controller.js';
+import { validationResult, orderCreateValRules, orderEditValRules } from '../validation-rules.js';
 
 var orderController = new OrderController();
+var lineItemController = new LineItemController();
 
 router.get('/', (req, res) => {
   orderController.findAll(results => {
@@ -13,19 +15,24 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  orderController.find(req.params.id, results => {
-    if (!results) {
+  let id = req.params.id;
+  let order = {};
+  orderController.find(id, results => {
+    order = results;
+    if (!order) {
       res.sendStatus(404);
     }
     else {
-      res.send(results);
+      lineItemController.findByOrder(id, results => {
+        order.line_items = results;
+        res.send(order);
+      })
     }
   })
-
 });
 
 router.post('/',
-orderValRules,
+orderCreateValRules,
 (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -43,7 +50,7 @@ orderValRules,
 });
 
 router.put('/:id',
-orderValRules,
+orderEditValRules,
 (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
