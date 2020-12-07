@@ -36,14 +36,29 @@ lineItemCreateValRules,
   }
 
   lineItemController.create(req.body, (results) => {
-    if (!results) {
-      res.status(400).send('Bad request - see server log');
-    }
-    else {
-      res.sendStatus(201);
-    }
-  })
+    res.sendStatus(201);
+  });
 });
 
+router.put('/:id',
+lineItemEditValRules,
+(req, res) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  let lineItem = req.body;
+  lineItem.id = req.params.id;
+  lineItemController.update(lineItem, (results) => {
+    if (results.affectedRows === 0) {
+      res.sendStatus(404);
+    }
+    else {
+      res.sendStatus(204);
+    }
+  })
+
+})
 
 export default router;
