@@ -51,6 +51,14 @@ class LineItemController {
       })
   }
 
+  delete(id, callback) {
+    pool.query('DELETE FROM line_items WHERE id = ?', [id], (error, results, fields) => {
+      if (error) throw error;
+
+      return callback(results);
+    })
+  }
+
 }
 
 export default LineItemController;

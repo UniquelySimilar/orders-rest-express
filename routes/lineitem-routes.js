@@ -57,8 +57,18 @@ lineItemEditValRules,
     else {
       res.sendStatus(204);
     }
-  })
+  });
+});
 
+router.delete('/:id', (req, res) => {
+  lineItemController.delete(req.params.id, (results) => {
+    if (results.affectedRows === 0) {
+      res.sendStatus(404);
+    }
+    else {
+      res.sendStatus(204);
+    }
+  })
 })
 
 export default router;
